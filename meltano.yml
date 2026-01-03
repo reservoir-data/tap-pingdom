@@ -1,0 +1,44 @@
+required_version: ">=4.0"
+send_anonymous_usage_stats: false
+project_id: tap-pingdom
+default_environment: dev
+environments:
+- name: dev
+venv:
+  backend: uv
+python: 3.14
+plugins:
+  extractors:
+  - name: tap-pingdom
+    label: Pingdom
+    namespace: pingdom
+    description: The Pingdom API
+    repo: https://github.com/edgarrmondragon/tap-pingdom
+    docs: https://github.com/edgarrmondragon/tap-pingdom#readme
+    pip_url: -e .
+    capabilities:
+    - state
+    - catalog
+    - discover
+    - about
+    - stream-maps
+
+    settings:
+    # TODO: To configure using Meltano, declare settings and their types here:
+    - name: token
+      kind: password
+      label: API Token
+      description: API Token for Pingdom
+      sensitive: true
+    - name: start_date
+      kind: date_iso8601
+      label: Start Date
+      description: Earliest datetime to get data from
+
+    config:
+      start_date: "2025-12-31"
+
+  loaders:
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl

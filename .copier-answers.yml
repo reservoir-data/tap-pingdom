@@ -1,0 +1,23 @@
+# Changes here will be overwritten by Copier
+_commit: v0.5.9
+_src_path: gh:edgarrmondragon/singer-tap-copier-template
+author_email: edgarrm358@gmail.com
+author_fullname: Edgar Ramírez-Mondragón
+author_username: edgarrmondragon
+dependabot_update_time: '10:00'
+dependabot_update_timezone: Etc/UTC
+python_main_version: '3.14'
+repository_name: tap-pingdom
+repository_namespace: edgarrmondragon
+repository_provider: github.com
+repository_visibility: private
+tap_auth_method: Bearer Token
+tap_id: tap-pingdom
+tap_package_command_line_name: tap-pingdom
+tap_package_distribution_name: tap-pingdom
+tap_package_import_name: tap_pingdom
+tap_source_description: The Pingdom API
+tap_source_id: Pingdom
+tap_source_name: Pingdom
+tap_stream_type: REST
+vscode_files: true

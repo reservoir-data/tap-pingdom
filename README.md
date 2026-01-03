@@ -1,0 +1,91 @@
+# tap-pingdom
+
+Singer tap for Pingdom, The Pingdom API.
+
+Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
+
+## Capabilities
+
+* `catalog`
+* `state`
+* `discover`
+* `about`
+* `stream-maps`
+
+## Settings
+
+- [ ] `Developer TODO:` Declare tap settings here.
+
+A full list of supported settings and capabilities is available by running: `tap-pingdom --about`
+
+### Source Authentication and Authorization
+
+- [ ] `Developer TODO:` If your tap requires special access on the source system, or any special authentication requirements, provide those here.
+
+## Usage
+
+You can easily run `tap-pingdom` by itself or in a pipeline using [Meltano](https://meltano.com/).
+
+### Executing the Tap Directly
+
+```bash
+tap-pingdom --version
+tap-pingdom --help
+tap-pingdom --config CONFIG --discover > ./catalog.json
+```
+
+## Developer Resources
+
+- [ ] `Developer TODO:` As a first step, scan the entire project for the text "`TODO:`" and complete any recommended steps, deleting the "TODO" references once completed.
+
+### Initialize your Development Environment
+
+1. Install [`tox`](https://tox.wiki/en/latest/installation.html).
+1. Install [`meltano`](https://docs.meltano.com/getting-started/installation).
+
+### Running Integration Tests
+
+Run integration tests:
+
+```bash
+tox -e 3.14
+```
+
+You can also test the `tap-pingdom` CLI interface directly:
+
+```bash
+uv run tap-pingdom --about --format=json
+```
+
+### Testing with [Meltano](https://www.meltano.com)
+
+_**Note:** This tap will work in any Singer environment and does not require Meltano.
+Examples here are for convenience and to streamline end-to-end orchestration scenarios._
+
+Your project comes with a custom `meltano.yml` project file already created. Open the `meltano.yml` and follow any _"TODO"_ items listed in
+the file.
+
+The following steps assume you have Meltano 3.5+ installed. If you have an older version, please upgrade your Meltano installation.
+
+1. Install all plugins
+
+   ```bash
+   meltano lock --update --all
+   ```
+
+1. Check that the extractor is working properly
+
+   ```bash
+   meltano invoke tap-pingdom --version
+   ```
+
+1. Execute an ELT pipeline
+
+   ```bash
+   meltano run tap-pingdom target-jsonl
+   ```
+
+### SDK Dev Guide
+
+See the [dev guide](https://sdk.meltano.com/en/latest/dev_guide.html) for more instructions on how to use the SDK to
+develop your own taps and targets.

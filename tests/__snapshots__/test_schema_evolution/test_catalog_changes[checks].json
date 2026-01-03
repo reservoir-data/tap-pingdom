@@ -1,0 +1,260 @@
+{
+  "key_properties": [
+    "id"
+  ],
+  "metadata": [
+    {
+      "breadcrumb": [
+        "properties",
+        "id"
+      ],
+      "metadata": {
+        "inclusion": "automatic"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "name"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "lasterrortime"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "lasttesttime"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "lastresponsetime"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "lastdownstart"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "lastdownend"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "status"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "resolution"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "hostname"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "created"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "tags"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "ipv6"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [],
+      "metadata": {
+        "inclusion": "available",
+        "selected": true,
+        "selected-by-default": true,
+        "table-key-properties": [
+          "id"
+        ]
+      }
+    }
+  ],
+  "replication_method": "FULL_TABLE",
+  "schema": {
+    "properties": {
+      "created": {
+        "description": "Creating time. Format is UNIX timestamp",
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "hostname": {
+        "description": "Target host",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "id": {
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "ipv6": {
+        "description": "Use ipv6 instead of ipv4",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "lastdownend": {
+        "description": "Timestamp of end of last check down (if any). Format is UNIX timestamp. During a downtime it will be lasttesttime.",
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "lastdownstart": {
+        "description": "Timestamp of start of last check down (if any). Format is UNIX timestamp.",
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "lasterrortime": {
+        "description": "Timestamp of last error (if any). Format is UNIX timestamp",
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "lastresponsetime": {
+        "description": "Response time (in milliseconds) of last test.",
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "lasttesttime": {
+        "description": "Timestamp of last test (if any). Format is UNIX timestamp",
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "name": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "resolution": {
+        "description": "How often should the check be tested? (minutes)",
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "status": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "tags": {
+        "description": "List of tags for check",
+        "items": {
+          "properties": {
+            "count": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      }
+    },
+    "type": [
+      "object",
+      "null"
+    ]
+  },
+  "stream": "checks",
+  "tap_stream_id": "checks"
+}

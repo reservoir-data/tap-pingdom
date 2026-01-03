@@ -1,0 +1,188 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = [
+  "hatch-vcs",
+  "hatchling",
+]
+
+[project]
+name = "tap-pingdom"
+description = "Singer tap for Pingdom, built with the Meltano SDK for Singer Taps."
+readme = "README.md"
+keywords = [
+  "ELT",
+  "Pingdom",
+  "singer.io",
+]
+license = "Apache-2.0"
+license-files = [ "LICENSE" ]
+maintainers = [
+  { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" },
+]
+authors = [
+  { name = "Edgar Ramírez-Mondragón", email = "edgarrm358@gmail.com" },
+]
+requires-python = ">=3.12"
+classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dynamic = [
+  "version",
+]
+dependencies = [
+  "singer-sdk~=0.53.4",
+]
+urls.Documentation = "https://github.com/edgarrmondragon/tap-pingdom#readme"
+urls.Homepage = "https://github.com/edgarrmondragon/tap-pingdom"
+urls.Repository = "https://github.com/edgarrmondragon/tap-pingdom"
+scripts."tap-pingdom" = "tap_pingdom.tap:TapPingdom.cli"
+
+[dependency-groups]
+dev = [
+  { include-group = "testing" },
+  { include-group = "typing" },
+]
+testing = [
+  "deptry>=0.12",
+  "pytest>=8",
+  "pytest-subtests>=0.13",
+  "pyyaml>=6",
+  "singer-sdk[testing]",
+  "syrupy>=5",
+]
+typing = [
+  "mypy>=1.18",
+  "ty>=0.0.1a21",
+  "types-pyyaml",
+  "types-requests>=2.32.4.20250913",
+  { include-group = "testing" },
+]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.uv]
+required-version = ">=0.8"
+
+[tool.ruff]
+line-length = 88
+preview = true
+lint.select = [
+  "ALL",
+]
+lint.ignore = [
+  "COM812", # missing-trailing-comma
+  "DJ",     # flake8-django
+  "FIX002", # line-contains-todo
+  "ISC001", # single-line-implicit-string-concatenation
+  "PD",     # pandas-vet
+]
+lint.per-file-ignores."scripts/*" = [
+  "INP001", # implicit-namespace-package
+  "T201",   # print
+  "TRY400", # error-instead-of-exception
+]
+lint.per-file-ignores."tests/*" = [
+  "ANN201", # missing-return-type-public-function
+  "S101",   # assert
+  "SLF001", # private-member-access
+]
+lint.unfixable = [
+  "ERA001", # commented-out-code
+]
+lint.flake8-annotations.allow-star-arg-any = true
+lint.isort.known-first-party = [
+  "tap_pingdom",
+]
+lint.isort.required-imports = [
+  "from __future__ import annotations",
+]
+lint.pydocstyle.convention = "google"
+
+[tool.deptry]
+extend_exclude = [ "scripts" ]
+
+[tool.deptry.package_module_name_map]
+mypy = "mypy"
+pytest-subtests = "pytest_subtests"
+pyyaml = "yaml"
+syrupy = "syrupy"
+ty = "ty"
+types-pyyaml = "yaml"
+types-requests = "requests"
+
+[tool.pyproject-fmt]
+max_supported_python = "3.14"
+
+[tool.pytest]
+addopts = [
+  "-vvv",
+  "--durations=10",
+  "-ra",
+  "--strict-config",
+  "--strict-markers",
+]
+filterwarnings = [
+  "error",
+]
+log_level = "INFO"
+minversion = "9"
+testpaths = [
+  "tests",
+]
+xfail_strict = true
+
+[tool.tox]
+min_version = "4.22"
+requires = [
+  "tox>=4.22",
+  "tox-uv",
+]
+env_list = [
+  "dependencies",
+  "typing",
+  "py314",
+  "py313",
+  "py312",
+  "py311",
+  "py310",
+]
+
+[tool.tox.env_run_base]
+runner = "uv-venv-lock-runner"
+pass_env = [
+  "GITHUB_*",
+  "TAP_PINGDOM_*",
+]
+dependency_groups = [ "testing" ]
+commands = [ [ "pytest", { replace = "posargs", default = [ "tests" ], extend = true } ] ]
+
+[tool.tox.env.dependencies]
+dependency_groups = [ "testing" ]
+commands = [
+  [ "deptry", { replace = "posargs", default = [ "." ], extend = true } ],
+]
+
+[tool.tox.env.typing]
+dependency_groups = [ "typing" ]
+commands = [
+  [ "mypy", { replace = "posargs", default = [ "tap_pingdom", "tests" ], extend = true } ],
+  [ "ty", "check", { replace = "posargs", default = [ "tap_pingdom", "tests" ], extend = true } ],
+]
+
+[tool.mypy]
+enable_error_code = [
+  "ignore-without-code",
+  "redundant-expr",
+  "truthy-bool",
+]
+strict = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_no_return = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
