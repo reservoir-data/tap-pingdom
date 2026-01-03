@@ -1,0 +1,147 @@
+{
+  "key_properties": [
+    "checkid",
+    "time"
+  ],
+  "metadata": [
+    {
+      "breadcrumb": [
+        "properties",
+        "checkid"
+      ],
+      "metadata": {
+        "inclusion": "automatic"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "time"
+      ],
+      "metadata": {
+        "inclusion": "automatic"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "status"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "responsetime"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "statusdesc"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "statusdesclong"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "probeid"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [],
+      "metadata": {
+        "inclusion": "available",
+        "selected": true,
+        "selected-by-default": true,
+        "table-key-properties": [
+          "checkid",
+          "time"
+        ],
+        "valid-replication-keys": [
+          "time"
+        ]
+      }
+    }
+  ],
+  "replication_key": "time",
+  "replication_method": "INCREMENTAL",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+      "checkid": {
+        "description": "Check identifier",
+        "type": [
+          "integer"
+        ]
+      },
+      "probeid": {
+        "description": "Probe identifier",
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "responsetime": {
+        "description": "Response time (ms)",
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "status": {
+        "description": "Test result status",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "statusdesc": {
+        "description": "Status description",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "statusdesclong": {
+        "description": "Long status description",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "time": {
+        "description": "Test timestamp (Unix time)",
+        "type": [
+          "integer"
+        ]
+      }
+    },
+    "required": [
+      "checkid",
+      "time"
+    ],
+    "type": "object"
+  },
+  "stream": "results",
+  "tap_stream_id": "results"
+}

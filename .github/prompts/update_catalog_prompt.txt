@@ -1,0 +1,6 @@
+Review the catalog changes and provide a concise one-line title for a PR, and a summary of the changes to be used as body.
+Report field additions, removals, and changes by stream (e.g. 'Added field `name` to stream `customers`').
+The stream name is part of the filename in tests/__snapshots__.
+The output should have the title on the first line, and the body on subsequent lines, separated by a blank line.
+Start the title with 'fix: ' and make sure it is a single line. Use backticks for stream and field names.
+Do not add any preamble.

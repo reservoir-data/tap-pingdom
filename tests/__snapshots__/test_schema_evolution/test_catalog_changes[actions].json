@@ -1,0 +1,197 @@
+{
+  "key_properties": [
+    "checkid",
+    "time",
+    "userid"
+  ],
+  "metadata": [
+    {
+      "breadcrumb": [
+        "properties",
+        "checkid"
+      ],
+      "metadata": {
+        "inclusion": "automatic"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "time"
+      ],
+      "metadata": {
+        "inclusion": "automatic"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "userid"
+      ],
+      "metadata": {
+        "inclusion": "automatic"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "username"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "via"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "status"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "messageshort"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "messagefull"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "sentto"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "charged"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [],
+      "metadata": {
+        "inclusion": "available",
+        "selected": true,
+        "selected-by-default": true,
+        "table-key-properties": [
+          "checkid",
+          "time",
+          "userid"
+        ],
+        "valid-replication-keys": [
+          "time"
+        ]
+      }
+    }
+  ],
+  "replication_key": "time",
+  "replication_method": "INCREMENTAL",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+      "charged": {
+        "description": "Whether charged",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "checkid": {
+        "description": "Check identifier",
+        "type": [
+          "integer"
+        ]
+      },
+      "messagefull": {
+        "description": "Full message",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "messageshort": {
+        "description": "Short message",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "sentto": {
+        "description": "Recipient address",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "status": {
+        "description": "Alert status",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "time": {
+        "description": "Alert time (Unix timestamp)",
+        "type": [
+          "integer"
+        ]
+      },
+      "userid": {
+        "description": "User identifier",
+        "type": [
+          "integer"
+        ]
+      },
+      "username": {
+        "description": "User name",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "via": {
+        "description": "Alert medium",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "checkid",
+      "time",
+      "userid"
+    ],
+    "type": "object"
+  },
+  "stream": "actions",
+  "tap_stream_id": "actions"
+}

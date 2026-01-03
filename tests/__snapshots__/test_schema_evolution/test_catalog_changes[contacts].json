@@ -1,0 +1,163 @@
+{
+  "key_properties": [
+    "id"
+  ],
+  "metadata": [
+    {
+      "breadcrumb": [
+        "properties",
+        "id"
+      ],
+      "metadata": {
+        "inclusion": "automatic"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "name"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "paused"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "type"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "owner"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "notification_targets"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [
+        "properties",
+        "teams"
+      ],
+      "metadata": {
+        "inclusion": "available"
+      }
+    },
+    {
+      "breadcrumb": [],
+      "metadata": {
+        "inclusion": "available",
+        "selected": true,
+        "selected-by-default": true,
+        "table-key-properties": [
+          "id"
+        ]
+      }
+    }
+  ],
+  "replication_method": "FULL_TABLE",
+  "schema": {
+    "properties": {
+      "id": {
+        "description": "Contact ID",
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "name": {
+        "description": "Contact name",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "notification_targets": {
+        "additionalProperties": true,
+        "description": "Notification targets configuration",
+        "type": [
+          "object",
+          "null"
+        ]
+      },
+      "owner": {
+        "description": "Indicates whether the contact is the owner of the organization",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "paused": {
+        "description": "Describes whether alerts are paused for this contact",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "teams": {
+        "items": {
+          "properties": {
+            "id": {
+              "description": "Team ID",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "name": {
+              "description": "Name of the team",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      },
+      "type": {
+        "description": "Type defines whether this is a user (login user) or a contact only",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "type": [
+      "object",
+      "null"
+    ]
+  },
+  "stream": "contacts",
+  "tap_stream_id": "contacts"
+}

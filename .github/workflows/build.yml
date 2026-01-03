@@ -1,0 +1,36 @@
+name: Build and publish
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Build wheel and sdist
+    runs-on: ubuntu-24.04
+    outputs:
+      package_version: ${{ steps.baipp.outputs.package_version }}
+    steps:
+    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      with:
+        fetch-depth: 0
+    - uses: hynek/build-and-inspect-python-package@efb823f52190ad02594531168b7a2d5790e66516 # v2.14.0
+      id: baipp
+
+  publish:
+    name: Publish to PyPI
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-24.04
+    needs: build
+    environment:
+      name: pypi
+      url: https://pypi.org/project/tap-pingdom/${{ needs.build.outputs.package_version }}
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+    - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+      with:
+        name: Packages
+        path: dist
+    - uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13.0

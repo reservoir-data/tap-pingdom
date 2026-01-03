@@ -1,0 +1,96 @@
+name: Test tap-pingdom
+
+on:
+  push:
+    branches: [main]
+    paths:
+    - tap_pingdom/**
+    - tests/**
+    - pyproject.toml
+    - .github/workflows/test.yml
+    - .github/workflows/constraints.txt
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+    - tap_pingdom/**
+    - tests/**
+    - pyproject.toml
+    - .github/workflows/test.yml
+    - .github/workflows/constraints.txt
+  workflow_dispatch:
+  schedule:
+  # Run weekly on Monday at 12:00 PM UTC
+  - cron: "0 12 * * 1"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  FORCE_COLOR: "1"
+  # renovate: datasource=pypi depName=tox
+  TOX_VERSION: 4.33.0
+  # renovate: datasource=pypi depName=tox-uv
+  TOX_UV_VERSION: 1.25.0
+  # renovate: datasource=pypi depName=uv
+  UV_VERSION: "0.9.21"
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+        - "3.14"
+        - "3.13"
+        - "3.12"
+
+    steps:
+    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+    - uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
+      id: setup-python
+      with:
+        python-version: ${{ matrix.python-version }}
+        allow-prereleases: true
+    - uses: astral-sh/setup-uv@681c641aba71e4a1c380be3ab5e12ad51f415867 # v7.1.6
+      with:
+        version: "${{ env.UV_VERSION }}"
+
+    - name: Run tests
+      env:
+        UV_PYTHON: ${{ steps.setup-python.outputs.python-path }}
+        TAP_PINGDOM_TOKEN: ${{ secrets.TAP_PINGDOM_TOKEN }}
+        TAP_PINGDOM_START_DATE: ${{ secrets.TAP_PINGDOM_START_DATE }}
+      run: >
+        uvx
+        --with tox-uv==${{ env.TOX_UV_VERSION }}
+        --with tox==${{ env.TOX_VERSION }}
+        tox -e ${{ matrix.python-version }}
+
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+    - uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
+      id: setup-python
+    - uses: astral-sh/setup-uv@681c641aba71e4a1c380be3ab5e12ad51f415867 # v7.1.6
+      with:
+        version: "${{ env.UV_VERSION }}"
+    - env:
+        UV_PYTHON: ${{ steps.setup-python.outputs.python-path }}
+      run: >
+        uv tool install
+        --with tox-uv==${{ env.TOX_UV_VERSION }}
+        --from tox==${{ env.TOX_VERSION }}
+        tox
+    - name: Static type checking
+      run: tox -e typing
+    - name: Unused, missing and transitive dependencies
+      run: tox -e dependencies
+
+  pre-commit:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+    - uses: j178/prek-action@91fd7d7cf70ae1dee9f4f44e7dfa5d1073fe6623 # v1.0.11
