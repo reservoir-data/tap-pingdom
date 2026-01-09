@@ -7,15 +7,15 @@ on:
     - tap_pingdom/**
     - tests/**
     - pyproject.toml
+    - uv.lock
     - .github/workflows/test.yml
-    - .github/workflows/constraints.txt
   pull_request:
     paths:
     - tap_pingdom/**
     - tests/**
     - pyproject.toml
+    - uv.lock
     - .github/workflows/test.yml
-    - .github/workflows/constraints.txt
   workflow_dispatch:
   schedule:
   # Run weekly on Monday at 12:00 PM UTC
