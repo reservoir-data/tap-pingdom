@@ -10,7 +10,6 @@ on:
     - .github/workflows/test.yml
     - .github/workflows/constraints.txt
   pull_request:
-    types: [opened, synchronize, reopened]
     paths:
     - tap_pingdom/**
     - tests/**
