@@ -6,6 +6,10 @@ on:
   # On Fridays
   - cron: '0 12 * * 5'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
 env:
   FORCE_COLOR: "1"
   # renovate: datasource=pypi depName=llm
@@ -15,14 +19,16 @@ env:
   # renovate: datasource=pypi depName=uv
   UV_VERSION: 0.9.21
 
+permissions: {}
+
 jobs:
   update_openapi_specification:
     name: Update Catalog
     runs-on: ubuntu-24.04
     permissions:
-      contents: write  # Required by peter-evans/create-pull-request
-      models: read  # Required by llm-github-models
-      pull-requests: write  # Required by peter-evans/create-pull-request
+      contents: write # Required by peter-evans/create-pull-request and for modifying files.
+      models: read # Required by llm-github-models.
+      pull-requests: write # Required by peter-evans/create-pull-request.
     steps:
     - uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2.2.1
       id: generate-token
@@ -30,6 +36,8 @@ jobs:
         app-id: ${{ vars.RESERVOIR_GITHUB_APP_ID }}
         private-key: ${{ secrets.RESERVOIR_GITHUB_APP_PKEY }}
     - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      with:
+        persist-credentials: false
     - uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b # v7.2.0
       with:
         version: ${{ env.UV_VERSION }}
@@ -40,7 +48,7 @@ jobs:
       run: git diff --quiet tests/__snapshots__
     - name: Install LLM with GitHub Models
       if: steps.check_snapshot_changes.outcome == 'failure'
-      run: uv tool install --with llm-github-models==${{ env.LLM_GITHUB_MODELS_VERSION }} --with llm==${{ env.LLM_VERSION }} llm
+      run: uv tool install --with llm-github-models==${LLM_GITHUB_MODELS_VERSION} --with llm==${LLM_VERSION} llm
     - name: Review catalog changes
       if: steps.check_snapshot_changes.outcome == 'failure'
       id: review-catalog-changes
