@@ -34,8 +34,11 @@ env:
   # renovate: datasource=pypi depName=uv
   UV_VERSION: "0.9.21"
 
+permissions: {}
+
 jobs:
   test:
+    name: Integration
     runs-on: ubuntu-24.04
     permissions:
       contents: read # Grant read access to the repository for cloning and running tests.
@@ -49,6 +52,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      with:
+        persist-credentials: false
     - uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
       id: setup-python
       with:
@@ -60,21 +65,25 @@ jobs:
 
     - name: Run tests
       env:
+        PYTHON_VERSION: ${{ steps.setup-python.outputs.python-version }}
         UV_PYTHON: ${{ steps.setup-python.outputs.python-path }}
         TAP_PINGDOM_TOKEN: ${{ secrets.TAP_PINGDOM_TOKEN }}
         TAP_PINGDOM_START_DATE: ${{ secrets.TAP_PINGDOM_START_DATE }}
       run: >
         uvx
-        --with tox-uv==${{ env.TOX_UV_VERSION }}
-        --with tox==${{ env.TOX_VERSION }}
-        tox -e ${{ matrix.python-version }}
+        --with tox-uv==${TOX_UV_VERSION}
+        --with tox==${TOX_VERSION}
+        tox -e ${PYTHON_VERSION}
 
   lint:
+    name: Lint
     runs-on: ubuntu-24.04
     permissions:
       contents: read # Grant read access to the repository for cloning and linting.
     steps:
     - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      with:
+        persist-credentials: false
     - uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
       id: setup-python
     - uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b # v7.2.0
@@ -84,8 +93,8 @@ jobs:
         UV_PYTHON: ${{ steps.setup-python.outputs.python-path }}
       run: >
         uv tool install
-        --with tox-uv==${{ env.TOX_UV_VERSION }}
-        --from tox==${{ env.TOX_VERSION }}
+        --with tox-uv==${TOX_UV_VERSION}
+        --from tox==${TOX_VERSION}
         tox
     - name: Static type checking
       run: tox -e typing
@@ -93,9 +102,12 @@ jobs:
       run: tox -e dependencies
 
   pre-commit:
+    name: pre-commit
     runs-on: ubuntu-24.04
     permissions:
       contents: read # Grant read access to the repository for cloning and running pre-commit hooks.
     steps:
     - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      with:
+        persist-credentials: false
     - uses: j178/prek-action@91fd7d7cf70ae1dee9f4f44e7dfa5d1073fe6623 # v1.0.11
