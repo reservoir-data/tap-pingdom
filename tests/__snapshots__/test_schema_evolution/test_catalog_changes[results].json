@@ -71,6 +71,7 @@
       "breadcrumb": [],
       "metadata": {
         "inclusion": "available",
+        "replication-key": "time",
         "selected": true,
         "selected-by-default": true,
         "table-key-properties": [
