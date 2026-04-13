@@ -2,44 +2,46 @@ name: Build and publish
 
 on:
   push:
+    tags: ["*"]
+
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
-permissions: {}
+env:
+  FORCE_COLOR: "1"
 
 jobs:
   build:
     name: Build wheel and sdist
     runs-on: ubuntu-24.04
-    permissions:
-      contents: read # Grant read access to the repository for cloning and building.
     outputs:
-      package_version: ${{ steps.baipp.outputs.package_version }}
+      name: ${{ steps.baipp.outputs.package_name }}
+      version: ${{ steps.baipp.outputs.package_version }}
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       with:
         fetch-depth: 0
         persist-credentials: false
-    - uses: hynek/build-and-inspect-python-package@efb823f52190ad02594531168b7a2d5790e66516 # v2.14.0
+    - uses: hynek/build-and-inspect-python-package@fe0a0fb1925ca263d076ca4f2c13e93a6e92a33e # v2.17.0
       id: baipp
 
   publish:
     name: Publish to PyPI
-    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-24.04
     needs: build
     environment:
       name: pypi
-      url: https://pypi.org/project/tap-pingdom/${{ needs.build.outputs.package_version }}
+      url: https://pypi.org/p/${{ needs.build.outputs.name }}/${{ needs.build.outputs.version }}
     permissions:
       contents: read # Grant read access for downloading artifacts and repository metadata.
       id-token: write # Required for OIDC authentication with PyPI.
-
     steps:
     - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
       with:
         name: Packages
         path: dist
-    - uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13.0
+    - uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # v1.14.0
