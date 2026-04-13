@@ -10,14 +10,14 @@ from typing import TYPE_CHECKING, Any, override
 from singer_sdk import RESTStream
 from singer_sdk.authenticators import BearerTokenAuthenticator
 from singer_sdk.helpers import jsonpath
-from singer_sdk.pagination import BaseOffsetPaginator
+from singer_sdk.pagination import OffsetPaginator
 
 if TYPE_CHECKING:
     import requests
     from singer_sdk.helpers.types import Context
 
 
-class PingdomPaginator(BaseOffsetPaginator):
+class PingdomPaginator(OffsetPaginator):
     """Paginator for Pingdom API offset-based pagination."""
 
     def __init__(
@@ -69,25 +69,8 @@ class PingdomStream(RESTStream[int]):
     @override
     @property
     def authenticator(self) -> BearerTokenAuthenticator:
-        """Get an authenticator object.
-
-        Returns:
-            The authenticator instance for this REST stream.
-        """
+        """Get an authenticator object."""
         return BearerTokenAuthenticator(token=self.config["token"])
-
-    @override
-    @property
-    def http_headers(self) -> dict[str, str]:
-        """Return the http headers needed.
-
-        Returns:
-            A dictionary of HTTP headers.
-        """
-        return {
-            **super().http_headers,
-            "User-Agent": f"{self.tap_name}/{self._tap.plugin_version}",
-        }
 
     @override
     def get_url_params(
@@ -118,10 +101,8 @@ class PingdomStream(RESTStream[int]):
         Returns:
             A paginator instance configured for this stream.
         """
-        # Default page size, can be overridden in subclasses
-        page_size = 100
         return PingdomPaginator(
             start_value=0,
-            page_size=page_size,
+            page_size=100,
             jsonpath_expression=self.records_jsonpath,
         )

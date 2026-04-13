@@ -237,7 +237,7 @@ class MaintenanceOccurrences(PingdomStream):
     #    component that StreamSchema can reference
     # To fix: Extract occurrence item schema from OpenAPI spec as a
     # standalone component (e.g., 'MaintenanceOccurrence'), then:
-    #   schema = StreamSchema(OPENAPI_SCHEMA, key="MaintenanceOccurrence")  # noqa: E501, ERA001
+    #   schema = StreamSchema(OPENAPI_SCHEMA, key="MaintenanceOccurrence")  # noqa: ERA001
     schema = th.PropertiesList(
         th.Property(
             "id",
