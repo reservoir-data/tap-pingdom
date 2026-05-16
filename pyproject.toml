@@ -26,7 +26,7 @@ dynamic = [
   "version",
 ]
 dependencies = [
-  "singer-sdk~=0.54.0a13",
+  "singer-sdk~=0.54.0",
 ]
 [[project.authors]]
 name = "Edgar Ramírez-Mondragón"
@@ -48,25 +48,24 @@ dev = [
 ]
 testing = [
   "deptry>=0.12",
-  "pytest>=8",
+  "pytest>=9",
   "pyyaml>=6",
   "singer-sdk[testing]",
   "syrupy>=5",
 ]
 typing = [
-  "mypy>=1.18",
+  "mypy>=2",
   "ty>=0.0.35",
   "types-pyyaml",
-  "types-requests>=2.33.0.20260508",
   { include-group = "testing" },
 ]
 
 [tool.hatch.version]
-fallback-version = "0.0.0"
+fallback-version = "0.0.0.dev0"
 source = "vcs"
 
 [tool.uv]
-required-version = ">=0.8"
+required-version = ">=0.10"
 
 [tool.ruff]
 line-length = 88
