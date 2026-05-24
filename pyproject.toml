@@ -55,7 +55,7 @@ testing = [
 ]
 typing = [
   "mypy>=2",
-  "ty>=0.0.35",
+  "ty>=0.0.38",
   "types-pyyaml",
   { include-group = "testing" },
 ]
