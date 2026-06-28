@@ -13,13 +13,14 @@ concurrency:
 env:
   FORCE_COLOR: "1"
   # renovate: datasource=pypi depName=llm
-  LLM_VERSION: 0.28
+  LLM_VERSION: 0.31
   # renovate: datasource=pypi depName=llm-github-models
   LLM_GITHUB_MODELS_VERSION: 0.18.0
   # renovate: datasource=pypi depName=uv
-  UV_VERSION: 0.9.21
+  UV_VERSION: 0.11.25
 
-permissions: {}
+permissions:
+  contents: read
 
 jobs:
   update_openapi_specification:
@@ -33,12 +34,13 @@ jobs:
     - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
       id: generate-token
       with:
-        app-id: ${{ vars.RESERVOIR_GITHUB_APP_ID }}
+        permission-contents: write
+        client-id: ${{ vars.RESERVOIR_GITHUB_APP_ID }}
         private-key: ${{ secrets.RESERVOIR_GITHUB_APP_PKEY }}
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       with:
         persist-credentials: false
-    - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+    - uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
       with:
         version: ${{ env.UV_VERSION }}
     - run: uv run scripts/update_openapi.py
@@ -48,7 +50,7 @@ jobs:
       run: git diff --quiet tests/__snapshots__
     - name: Install LLM with GitHub Models
       if: steps.check_snapshot_changes.outcome == 'failure'
-      run: uv tool install --with llm-github-models==${LLM_GITHUB_MODELS_VERSION} --with llm==${LLM_VERSION} llm
+      run: uv tool install --with llm-github-models=="${LLM_GITHUB_MODELS_VERSION}" --with llm=="${LLM_VERSION}" llm
     - name: Review catalog changes
       if: steps.check_snapshot_changes.outcome == 'failure'
       id: review-catalog-changes
@@ -56,7 +58,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WORKSPACE_PATH: ${{ github.workspace }}
       run: |
-        SYSTEM_PROMPT=$(cat $WORKSPACE_PATH/.github/prompts/update_catalog_prompt.txt)
+        SYSTEM_PROMPT=$(cat "$WORKSPACE_PATH"/.github/prompts/update_catalog_prompt.txt)
         GENERATED_CONTENT=$(git --no-pager diff -p --no-color HEAD tests/__snapshots__ | llm prompt -m github/gpt-4o-mini -s "$SYSTEM_PROMPT")
 
         PR_TITLE=$(echo "$GENERATED_CONTENT" | head -n 1)
@@ -80,6 +82,7 @@ jobs:
             echo 'EOF'
         } >> "$GITHUB_OUTPUT"
     - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+      # zizmor: ignore[superfluous-actions]
       if: steps.check_snapshot_changes.outcome == 'failure'
       with:
         title: ${{ steps.review-catalog-changes.outputs.title }}

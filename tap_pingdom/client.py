@@ -69,7 +69,7 @@ class PingdomStream(RESTStream[int]):
     @override
     @property
     def authenticator(self) -> BearerTokenAuthenticator:
-        """Get an authenticator object."""
+        """Authenticator object."""
         return BearerTokenAuthenticator(token=self.config["token"])
 
     @override
