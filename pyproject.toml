@@ -51,11 +51,11 @@ testing = [
   "pytest>=9",
   "pyyaml>=6",
   "singer-sdk[testing]",
-  "syrupy>=5.3.2",
+  "syrupy>=5.4",
 ]
 typing = [
   "mypy>=2.1",
-  "ty>=0.0.53",
+  "ty>=0.0.56",
   { include-group = "testing" },
 ]
 
