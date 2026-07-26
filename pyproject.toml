@@ -54,7 +54,7 @@ testing = [
   "syrupy>=5.5.3",
 ]
 typing = [
-  "mypy>=2.3.0",
+  "mypy>=2.3",
   "ty>=0.0.62",
   { include-group = "testing" },
 ]
