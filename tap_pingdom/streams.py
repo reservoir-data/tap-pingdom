@@ -101,7 +101,7 @@ class Actions(PingdomStream):
     # 3. OpenAPI spec defines charged as string but it should be boolean
     # To fix: Update OpenAPI spec with correct types and extract alert
     # item schema as a standalone component (e.g., 'AlertItem'), then:
-    #   schema = StreamSchema(OPENAPI_SCHEMA, key="AlertItem")  # noqa: ERA001
+    #   schema = StreamSchema(OPENAPI_SCHEMA, key="AlertItem")  # ruff: ignore[commented-out-code]
     schema = th.PropertiesList(
         th.Property(
             "checkid",
@@ -199,7 +199,7 @@ class Maintenance(PingdomStream):
     # To fix: Extract maintenance item schema from OpenAPI spec as a
     # standalone component (e.g., 'MaintenanceWindow'), verify which
     # properties are actually used, then:
-    #   schema = StreamSchema(OPENAPI_SCHEMA, key="MaintenanceWindow")  # noqa: ERA001
+    #   schema = StreamSchema(OPENAPI_SCHEMA, key="MaintenanceWindow")  # ruff: ignore[commented-out-code]
     schema = th.PropertiesList(
         th.Property(
             "id",
@@ -237,7 +237,7 @@ class MaintenanceOccurrences(PingdomStream):
     #    component that StreamSchema can reference
     # To fix: Extract occurrence item schema from OpenAPI spec as a
     # standalone component (e.g., 'MaintenanceOccurrence'), then:
-    #   schema = StreamSchema(OPENAPI_SCHEMA, key="MaintenanceOccurrence")  # noqa: ERA001
+    #   schema = StreamSchema(OPENAPI_SCHEMA, key="MaintenanceOccurrence")  # ruff: ignore[commented-out-code]
     schema = th.PropertiesList(
         th.Property(
             "id",
@@ -340,7 +340,7 @@ class Results(PingdomStream):
     # To fix: Extract result item schema from OpenAPI spec as a standalone
     # component (e.g., 'ResultItem'), document that checkid is injected
     # from context, then:
-    #   schema = StreamSchema(OPENAPI_SCHEMA, key="ResultItem")  # noqa: ERA001
+    #   schema = StreamSchema(OPENAPI_SCHEMA, key="ResultItem")  # ruff: ignore[commented-out-code]
     schema = th.PropertiesList(
         th.Property(
             "checkid",
