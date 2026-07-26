@@ -67,6 +67,7 @@ source = "vcs"
 required-version = ">=0.10"
 
 [tool.ruff]
+required-version = ">=0.16"
 line-length = 88
 preview = true
 [tool.ruff.lint]
@@ -74,24 +75,22 @@ select = [
   "ALL",
 ]
 ignore = [
-  "COM812", # missing-trailing-comma
-  "DJ",     # flake8-django
-  "FIX002", # line-contains-todo
-  "ISC001", # single-line-implicit-string-concatenation
-  "PD",     # pandas-vet
+  "missing-trailing-comma",
+  "line-contains-todo",
+  "single-line-implicit-string-concatenation",
 ]
 per-file-ignores."scripts/*" = [
-  "INP001", # implicit-namespace-package
-  "T201",   # print
-  "TRY400", # error-instead-of-exception
+  "implicit-namespace-package",
+  "print",
+  "error-instead-of-exception",
 ]
 per-file-ignores."tests/*" = [
-  "ANN201", # missing-return-type-public-function
-  "S101",   # assert
-  "SLF001", # private-member-access
+  "missing-return-type-undocumented-public-function",
+  "assert",
+  "private-member-access",
 ]
 unfixable = [
-  "ERA001", # commented-out-code
+  "commented-out-code",
 ]
 flake8-annotations.allow-star-arg-any = true
 pydocstyle.convention = "google"
@@ -152,7 +151,6 @@ commands = [
   [ "deptry", { replace = "posargs", default = [ "." ], extend = true } ],
 ]
 labels = [ "check" ]
-
 [tool.tox.env.typing]
 description = "type checks with mypy and ty"
 dependency_groups = [ "typing" ]
@@ -161,7 +159,6 @@ commands = [
   [ "ty", "check", { replace = "posargs", default = [ "tap_pingdom", "tests" ], extend = true } ],
 ]
 labels = [ "check" ]
-
 [tool.tox.env_run_base]
 runner = "uv-venv-lock-runner"
 description = "run tests on Python {py_dot_ver}"
