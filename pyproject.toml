@@ -55,7 +55,7 @@ testing = [
 ]
 typing = [
   "mypy>=2.3",
-  "ty>=0.0.62",
+  "ty>=0.0.64",
   { include-group = "testing" },
 ]
 
