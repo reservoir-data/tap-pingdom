@@ -48,7 +48,7 @@ tap-pingdom --config CONFIG --discover > ./catalog.json
 Run integration tests:
 
 ```bash
-tox -e 3.14
+tox -e 3.15
 ```
 
 You can also test the `tap-pingdom` CLI interface directly:

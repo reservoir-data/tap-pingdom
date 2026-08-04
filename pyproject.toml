@@ -21,6 +21,7 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
 ]
 dynamic = [
   "version",
@@ -99,6 +100,7 @@ pydocstyle.convention = "google"
 extend_exclude = [ "scripts" ]
 
 [tool.pyproject-fmt]
+max_supported_python = "3.15"
 table_format = "long"
 
 [tool.typos.files]

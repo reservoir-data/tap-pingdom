@@ -6,7 +6,7 @@ environments:
 - name: dev
 venv:
   backend: uv
-python: python3.14
+python: python3.15
 plugins:
   extractors:
   - name: tap-pingdom

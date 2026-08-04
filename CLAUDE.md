@@ -6,7 +6,7 @@ This is a Singer tap for the Pingdom API, built with the Meltano Singer SDK. It 
 
 ## Technology Stack
 
-- **Python Version**: 3.12+ (main development on 3.14)
+- **Python Version**: 3.12+ (main development on 3.15)
 - **Package Manager**: uv (>=0.8 required)
 - **Build System**: hatchling with hatch-vcs for versioning
 - **Testing**: pytest with syrupy for snapshot testing
